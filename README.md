@@ -57,3 +57,9 @@ npm run typecheck
 - [Expo SDK 54 documentation](https://docs.expo.dev/versions/v54.0.0/)
 - [React Native 0.81 components](https://reactnative.dev/docs/0.81/components-and-apis)
 - [Expo Picker reference](https://docs.expo.dev/versions/v54.0.0/sdk/picker/)
+
+## AI Decliration
+
+ChatGPT was used for a mark estimation.
+
+The chat can be found here: https://chatgpt.com/share/6acd4bd0-6584-83ea-9185-9c9e1e816cb5 
