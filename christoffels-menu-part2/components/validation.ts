@@ -8,8 +8,12 @@ export type FormErrors = {
 function getPriceError(price: string): string {
   const priceText = price.trim().replace(',', '.');
 
-  if (priceText === '') {
+    if (priceText === '') {
     return 'Enter a price.';
+  }
+
+  if (priceText.startsWith('-')) {
+    return 'Enter a price greater than 0.';
   }
 
   // only digits and a decimal point belong in a price
