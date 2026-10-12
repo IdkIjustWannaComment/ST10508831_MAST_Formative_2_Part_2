@@ -29,7 +29,8 @@ export default function AddMenuItemScreen({ onSave, onCancel }: AddMenuItemScree
     course: '',
     price: '',
   });
-  const formScroll = useRef<ScrollView>(null);
+    const formScroll = useRef<ScrollView>(null);
+  const descriptionRef = useRef<TextInput>(null);
   const hasErrors = errors.dishName !== '' || errors.description !== '' ||
     errors.course !== '' || errors.price !== '';
 
