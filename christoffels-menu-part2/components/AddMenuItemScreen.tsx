@@ -88,6 +88,9 @@ export default function AddMenuItemScreen({ onSave, onCancel }: AddMenuItemScree
             placeholder="e.g. Grilled Chicken"
             placeholderTextColor={colours.muted}
             autoCapitalize="words"
+            returnKeyType="next"
+            submitBehavior="submit"
+            onSubmitEditing={() => descriptionRef.current?.focus()}
             accessibilityLabel="Dish name"
             accessibilityHint={errors.dishName || 'Required'}
           />
