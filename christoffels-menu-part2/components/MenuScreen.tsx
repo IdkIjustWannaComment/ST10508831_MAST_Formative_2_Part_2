@@ -15,6 +15,11 @@ import { colours, styles } from './Styles';
 type MenuScreenProps = {
   menuItems: MenuItem[];
   successMessage: string;
+  searchText: string;
+  courseFilter: CourseFilter;
+  onSearchChange: (value: string) => void;
+  onCourseFilterChange: (value: CourseFilter) => void;
+  onClearSearchAndFilter: () => void;
   onAdd: () => void;
   onEdit: (item: MenuItem) => void;
   onDelete: (item: MenuItem) => void;
@@ -24,13 +29,16 @@ type MenuScreenProps = {
 export default function MenuScreen({
   menuItems,
   successMessage,
+  searchText,
+  courseFilter,
+  onSearchChange,
+  onCourseFilterChange,
+  onClearSearchAndFilter,
   onAdd,
   onEdit,
   onDelete,
   onHome,
 }: MenuScreenProps) {
-  const [searchText, setSearchText] = useState('');
-  const [courseFilter, setCourseFilter] = useState<CourseFilter>('All courses');
   const [deleteItem, setDeleteItem] = useState<MenuItem | null>(null);
 
   const filteredItems = useMemo(
@@ -39,11 +47,6 @@ export default function MenuScreen({
   );
 
   const filterOptions: CourseFilter[] = ['All courses', ...courseOptions];
-
-  function clearSearchAndFilter() {
-    setSearchText('');
-    setCourseFilter('All courses');
-  }
 
   function confirmDelete(item: MenuItem) {
     onDelete(item);
@@ -74,7 +77,7 @@ export default function MenuScreen({
       <TextInput
         style={[styles.input, styles.searchInput]}
         value={searchText}
-        onChangeText={setSearchText}
+        onChangeText={onSearchChange}
         placeholder="e.g. Chicken"
         placeholderTextColor={colours.muted}
         autoCapitalize="none"
@@ -91,7 +94,7 @@ export default function MenuScreen({
             <TouchableOpacity
               key={option}
               style={[styles.filterButton, isActive && styles.activeFilterButton]}
-              onPress={() => setCourseFilter(option)}
+              onPress={() => onCourseFilterChange(option)}
               activeOpacity={0.75}
               accessibilityRole="button"
               accessibilityLabel={`Filter by ${option}`}
@@ -113,7 +116,7 @@ export default function MenuScreen({
       <View style={styles.clearButtonSpace}>
         <MenuButton
           title="CLEAR SEARCH & FILTER"
-          onPress={clearSearchAndFilter}
+          onPress={onClearSearchAndFilter}
           secondary
         />
       </View>
