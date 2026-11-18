@@ -95,8 +95,7 @@ Repeated statistics were moved into `MenuStatistics.tsx`. Repeated dish cards we
 
 ## Submission links
 
-- **GitHub repository:** Add your repository link here.
-- **YouTube video:** Add your unlisted YouTube link here.
+- **GitHub repository:** https://github.com/IdkIjustWannaComment/ST10508831_MAST_Formative_2_Part_2
 
 ## References
 
