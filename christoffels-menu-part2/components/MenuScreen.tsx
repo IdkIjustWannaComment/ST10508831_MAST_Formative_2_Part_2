@@ -5,11 +5,7 @@ import MenuButton from './MenuButton';
 import MenuItemCard from './MenuItemCard';
 import MenuStatistics from './MenuStatistics';
 import { MenuItem } from './MenuItem';
-import {
-  courseOptions,
-  CourseFilter,
-  filterMenuItems,
-} from './menuHelpers';
+import { courseOptions, CourseFilter, filterMenuItems } from './menuHelpers';
 import { colours, styles } from './Styles';
 
 type MenuScreenProps = {
@@ -55,84 +51,87 @@ export default function MenuScreen({
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.screenTitle} accessibilityRole="header">Menu</Text>
-
-      <View style={styles.buttonSpace}>
-        <MenuButton title="HOME" onPress={onHome} secondary />
-      </View>
-
-      <View style={styles.buttonSpace}>
-        <MenuButton title="ADD MENU ITEM" onPress={onAdd} />
-      </View>
-
-      {successMessage !== '' && (
-        <Text style={styles.successMessage} accessibilityLiveRegion="polite" role="status">
-          {successMessage}
-        </Text>
-      )}
-
-      <MenuStatistics menuItems={menuItems} />
-
-      <Text style={styles.searchLabel}>Search by dish name</Text>
-      <TextInput
-        style={[styles.input, styles.searchInput]}
-        value={searchText}
-        onChangeText={onSearchChange}
-        placeholder="e.g. Chicken"
-        placeholderTextColor={colours.muted}
-        autoCapitalize="none"
-        returnKeyType="search"
-        accessibilityLabel="Search menu by dish name"
-      />
-
-      <Text style={styles.filterLabel}>Filter by course</Text>
-      <View style={styles.filterRow}>
-        {filterOptions.map((option) => {
-          const isActive = courseFilter === option;
-
-          return (
-            <TouchableOpacity
-              key={option}
-              style={[styles.filterButton, isActive && styles.activeFilterButton]}
-              onPress={() => onCourseFilterChange(option)}
-              activeOpacity={0.75}
-              accessibilityRole="button"
-              accessibilityLabel={`Filter by ${option}`}
-              accessibilityState={{ selected: isActive }}
-            >
-              <Text
-                style={[
-                  styles.filterButtonText,
-                  isActive && styles.activeFilterButtonText,
-                ]}
-              >
-                {option}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-
-      <View style={styles.clearButtonSpace}>
-        <MenuButton
-          title="CLEAR SEARCH & FILTER"
-          onPress={onClearSearchAndFilter}
-          secondary
-        />
-      </View>
-
-      {menuItems.length > 0 && (
-        <Text style={styles.resultsMessage}>
-          Showing {filteredItems.length} of {menuItems.length} dishes
-        </Text>
-      )}
-
       <FlatList
         data={filteredItems}
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
         contentContainerStyle={styles.listContent}
         keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.screenTitle} accessibilityRole="header">Menu</Text>
+
+            <View style={styles.buttonSpace}>
+              <MenuButton title="HOME" onPress={onHome} secondary />
+            </View>
+
+            <View style={styles.buttonSpace}>
+              <MenuButton title="ADD MENU ITEM" onPress={onAdd} />
+            </View>
+
+            {successMessage !== '' && (
+              <Text style={styles.successMessage} accessibilityLiveRegion="polite" role="status">
+                {successMessage}
+              </Text>
+            )}
+
+            <MenuStatistics menuItems={menuItems} />
+
+            <Text style={styles.searchLabel}>Search by dish name</Text>
+            <TextInput
+              style={[styles.input, styles.searchInput]}
+              value={searchText}
+              onChangeText={onSearchChange}
+              placeholder="e.g. Chicken"
+              placeholderTextColor={colours.muted}
+              autoCapitalize="none"
+              returnKeyType="search"
+              accessibilityLabel="Search menu by dish name"
+            />
+
+            <Text style={styles.filterLabel}>Filter by course</Text>
+            <View style={styles.filterRow}>
+              {filterOptions.map((option) => {
+                const isActive = courseFilter === option;
+
+                return (
+                  <TouchableOpacity
+                    key={option}
+                    style={[styles.filterButton, isActive && styles.activeFilterButton]}
+                    onPress={() => onCourseFilterChange(option)}
+                    activeOpacity={0.75}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Filter by ${option}`}
+                    accessibilityState={{ selected: isActive }}
+                  >
+                    <Text
+                      style={[
+                        styles.filterButtonText,
+                        isActive && styles.activeFilterButtonText,
+                      ]}
+                    >
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
+            <View style={styles.clearButtonSpace}>
+              <MenuButton
+                title="CLEAR SEARCH & FILTER"
+                onPress={onClearSearchAndFilter}
+                secondary
+              />
+            </View>
+
+            {menuItems.length > 0 && (
+              <Text style={styles.resultsMessage}>
+                Showing {filteredItems.length} of {menuItems.length} dishes
+              </Text>
+            )}
+          </View>
+        }
         ListEmptyComponent={
           <View style={styles.emptyMenu}>
             <Text style={styles.emptyTitle}>
