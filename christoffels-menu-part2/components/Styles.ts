@@ -10,6 +10,8 @@ export const colours = {
   error: '#B42318',
   errorBackground: '#FFF7F6',
   cancel: '#52625B',
+  red: '#B42318',
+  redBackground: '#FFF0EE',
 };
 
 export const styles = StyleSheet.create({
@@ -233,5 +235,199 @@ export const styles = StyleSheet.create({
   },
   cancelButtonSpace: {
     marginBottom: 8,
+  },
+
+  homeScreen: {
+    flex: 1,
+  },
+  homeContent: {
+    paddingHorizontal: 20,
+    paddingTop: 24,
+    paddingBottom: 32,
+  },
+  homeHeading: {
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: '700',
+    color: colours.text,
+    marginBottom: 8,
+  },
+  homeIntro: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: colours.muted,
+    marginBottom: 22,
+  },
+  homeButtonSpace: {
+    marginBottom: 12,
+  },
+  homeStatisticsSpace: {
+    marginTop: 10,
+  },
+
+  statisticsCard: {
+    borderWidth: 1,
+    borderColor: colours.border,
+    borderRadius: 6,
+    backgroundColor: '#F5F8F6',
+    padding: 16,
+    marginBottom: 16,
+  },
+  statisticsTitle: {
+    fontSize: 18,
+    lineHeight: 25,
+    fontWeight: '700',
+    color: colours.text,
+    marginBottom: 12,
+  },
+  statisticsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  statisticItem: {
+    width: '50%',
+    paddingRight: 10,
+    marginBottom: 12,
+  },
+  statisticLabel: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: colours.muted,
+  },
+  statisticValue: {
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '700',
+    color: colours.green,
+  },
+
+  searchLabel: {
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '600',
+    color: colours.text,
+    marginBottom: 8,
+  },
+  searchInput: {
+    marginBottom: 14,
+  },
+  filterLabel: {
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '600',
+    color: colours.text,
+    marginBottom: 8,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 14,
+  },
+  filterButton: {
+    minHeight: 40,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: colours.green,
+    borderRadius: 20,
+    backgroundColor: colours.white,
+    justifyContent: 'center',
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  activeFilterButton: {
+    backgroundColor: colours.green,
+  },
+  filterButtonText: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '600',
+    color: colours.green,
+  },
+  activeFilterButtonText: {
+    color: colours.white,
+  },
+  clearButtonSpace: {
+    marginBottom: 16,
+  },
+  resultsMessage: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: colours.muted,
+    marginBottom: 12,
+  },
+
+  cardActions: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingHorizontal: 14,
+    paddingBottom: 14,
+  },
+  cardActionButton: {
+    flex: 1,
+  },
+  deleteButton: {
+    backgroundColor: colours.red,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(32, 39, 36, 0.55)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalCard: {
+    width: '100%',
+    maxWidth: 480,
+    backgroundColor: colours.white,
+    borderRadius: 8,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '700',
+    color: colours.text,
+    marginBottom: 10,
+  },
+  modalMessage: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: colours.muted,
+    marginBottom: 20,
+  },
+  modalActions: {
+    gap: 12,
+  },
+
+  formScreen: {
+    flex: 1,
+  },
+  formKeyboardView: {
+    flex: 1,
+  },
+  formScroll: {
+    flex: 1,
+  },
+  formFooter: {
+    backgroundColor: colours.white,
+    borderTopWidth: 1,
+    borderTopColor: colours.border,
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  doneTypingButton: {
+    alignSelf: 'flex-end',
+    minHeight: 40,
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  doneTypingText: {
+    color: colours.green,
+    fontSize: 15,
+    lineHeight: 22,
+    fontWeight: '700',
   },
 });
