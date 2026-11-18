@@ -47,10 +47,10 @@
 ## Delete checks
 
 - [x] Delete opens the named confirmation.
-- [ ] Cancel keeps the dish.
-- [ ] Delete removes only the selected dish.
+- [x] Cancel keeps the dish.
+- [x] Delete removes only the selected dish.
 - [ ] Android Back closes the confirmation without deleting.
-- [ ] The dish count, average and course counts update after deletion.
+- [x] The dish count, average and course counts update after deletion.
 
 ## Search and filter checks
 

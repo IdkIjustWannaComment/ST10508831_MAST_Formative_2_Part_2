@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DeleteConfirmation from './DeleteConfirmation';
 import MenuButton from './MenuButton';
 import MenuItemCard from './MenuItemCard';
@@ -86,6 +86,8 @@ export default function MenuScreen({
               placeholderTextColor={colours.muted}
               autoCapitalize="none"
               returnKeyType="search"
+              onSubmitEditing={() => Keyboard.dismiss()}
+              onBlur={() => Keyboard.dismiss()}
               accessibilityLabel="Search menu by dish name"
             />
 

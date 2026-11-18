@@ -150,6 +150,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   formContent: {
+    paddingHorizontal: 20,
     paddingBottom: 32,
   },
   formHint: {

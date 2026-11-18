@@ -25,17 +25,27 @@ export default function App() {
   const nextItemId = useRef(1);
 
   useEffect(() => {
-    if (currentScreen !== 'form') {
-      return;
+    if (currentScreen === 'form') {
+      const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+        setSelectedItem(null);
+        setCurrentScreen(formReturnScreen);
+        return true;
+      });
+
+      return () => subscription.remove();
     }
 
-    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-      setSelectedItem(null);
-      setCurrentScreen(formReturnScreen);
-      return true;
-    });
+    if (currentScreen === 'menu') {
+      const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+        setCurrentScreen('home');
+        setSuccessMessage('');
+        return true;
+      });
 
-    return () => subscription.remove();
+      return () => subscription.remove();
+    }
+
+    return;
   }, [currentScreen, formReturnScreen]);
 
   function openHome() {
@@ -96,6 +106,7 @@ export default function App() {
     }
 
     setSelectedItem(null);
+    clearSearchAndFilter();
     setCurrentScreen('menu');
   }
 
