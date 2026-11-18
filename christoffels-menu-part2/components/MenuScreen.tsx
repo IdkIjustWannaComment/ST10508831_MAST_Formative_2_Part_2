@@ -1,22 +1,62 @@
-import { FlatList, Text, View } from 'react-native';
-import { MenuItem } from './MenuItem';
+import { useMemo, useState } from 'react';
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import DeleteConfirmation from './DeleteConfirmation';
 import MenuButton from './MenuButton';
-import { styles } from './Styles';
+import MenuItemCard from './MenuItemCard';
+import MenuStatistics from './MenuStatistics';
+import { MenuItem } from './MenuItem';
+import {
+  courseOptions,
+  CourseFilter,
+  filterMenuItems,
+} from './menuHelpers';
+import { colours, styles } from './Styles';
 
 type MenuScreenProps = {
   menuItems: MenuItem[];
   successMessage: string;
   onAdd: () => void;
+  onEdit: (item: MenuItem) => void;
+  onDelete: (item: MenuItem) => void;
+  onHome: () => void;
 };
 
 export default function MenuScreen({
   menuItems,
   successMessage,
   onAdd,
+  onEdit,
+  onDelete,
+  onHome,
 }: MenuScreenProps) {
+  const [searchText, setSearchText] = useState('');
+  const [courseFilter, setCourseFilter] = useState<CourseFilter>('All courses');
+  const [deleteItem, setDeleteItem] = useState<MenuItem | null>(null);
+
+  const filteredItems = useMemo(
+    () => filterMenuItems(menuItems, searchText, courseFilter),
+    [menuItems, searchText, courseFilter],
+  );
+
+  const filterOptions: CourseFilter[] = ['All courses', ...courseOptions];
+
+  function clearSearchAndFilter() {
+    setSearchText('');
+    setCourseFilter('All courses');
+  }
+
+  function confirmDelete(item: MenuItem) {
+    onDelete(item);
+    setDeleteItem(null);
+  }
+
   return (
     <View style={styles.screen}>
       <Text style={styles.screenTitle} accessibilityRole="header">Menu</Text>
+
+      <View style={styles.buttonSpace}>
+        <MenuButton title="HOME" onPress={onHome} secondary />
+      </View>
 
       <View style={styles.buttonSpace}>
         <MenuButton title="ADD MENU ITEM" onPress={onAdd} />
@@ -28,32 +68,98 @@ export default function MenuScreen({
         </Text>
       )}
 
+      <MenuStatistics menuItems={menuItems} />
+
+      <Text style={styles.searchLabel}>Search by dish name</Text>
+      <TextInput
+        style={[styles.input, styles.searchInput]}
+        value={searchText}
+        onChangeText={setSearchText}
+        placeholder="e.g. Chicken"
+        placeholderTextColor={colours.muted}
+        autoCapitalize="none"
+        returnKeyType="search"
+        accessibilityLabel="Search menu by dish name"
+      />
+
+      <Text style={styles.filterLabel}>Filter by course</Text>
+      <View style={styles.filterRow}>
+        {filterOptions.map((option) => {
+          const isActive = courseFilter === option;
+
+          return (
+            <TouchableOpacity
+              key={option}
+              style={[styles.filterButton, isActive && styles.activeFilterButton]}
+              onPress={() => setCourseFilter(option)}
+              activeOpacity={0.75}
+              accessibilityRole="button"
+              accessibilityLabel={`Filter by ${option}`}
+              accessibilityState={{ selected: isActive }}
+            >
+              <Text
+                style={[
+                  styles.filterButtonText,
+                  isActive && styles.activeFilterButtonText,
+                ]}
+              >
+                {option}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      <View style={styles.clearButtonSpace}>
+        <MenuButton
+          title="CLEAR SEARCH & FILTER"
+          onPress={clearSearchAndFilter}
+          secondary
+        />
+      </View>
+
+      {menuItems.length > 0 && (
+        <Text style={styles.resultsMessage}>
+          Showing {filteredItems.length} of {menuItems.length} dishes
+        </Text>
+      )}
+
       <FlatList
-        data={menuItems}
+        data={filteredItems}
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
         contentContainerStyle={styles.listContent}
         keyboardShouldPersistTaps="handled"
         ListEmptyComponent={
           <View style={styles.emptyMenu}>
-            <Text style={styles.emptyTitle}>No menu items yet.</Text>
-            <Text style={styles.bodyText}>Tap Add Menu Item to begin.</Text>
+            <Text style={styles.emptyTitle}>
+              {menuItems.length === 0 ? 'No menu items yet.' : 'No matching dishes'}
+            </Text>
+            <Text style={styles.bodyText}>
+              {menuItems.length === 0
+                ? 'Tap Add Menu Item to begin.'
+                : 'Try another search or course filter.'}
+            </Text>
           </View>
         }
         renderItem={({ item }) => (
-          <View style={styles.menuItem}>
-            <Text style={styles.dishName}>{item.dishName}</Text>
-            <Text style={styles.description}>{item.description}</Text>
-            <Text style={styles.courseAndPrice}>
-              {item.course} | R{item.price.toFixed(2)}
-            </Text>
-          </View>
+          <MenuItemCard
+            item={item}
+            onEdit={onEdit}
+            onDelete={setDeleteItem}
+          />
         )}
         ListFooterComponent={
-          menuItems.length > 0 ? (
+          filteredItems.length > 0 ? (
             <Text style={styles.listHint}>Scroll to view more dishes.</Text>
           ) : null
         }
+      />
+
+      <DeleteConfirmation
+        item={deleteItem}
+        onCancel={() => setDeleteItem(null)}
+        onConfirm={confirmDelete}
       />
     </View>
   );
